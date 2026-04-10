@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Schedule & Alarm Manager</title>
+    
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config for Custom Theme -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#ec4899',
+                        success: '#10b981',
+                        warning: '#f59e0b',
+                        danger: '#ef4444',
+                        dark: {
+                            bg: '#0f172a',
+                            card: '#1e293b',
+                            text: '#f1f5f9'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Toastify CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans transition-colors duration-300 dark:bg-dark-bg dark:text-dark-text">
+    
+    <!-- Header -->
+    <header class="bg-white shadow-sm dark:bg-dark-card sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <h1 class="text-xl font-bold text-gray-900 dark:text-white">Schedule Manager</h1>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Dark Mode Toggle -->
+                    <button id="darkModeToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                    
+                    <!-- Request Notification Permission -->
+                    <button id="notificationPermissionBtn" class="hidden p-2 rounded-lg bg-primary text-white hover:bg-indigo-700 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Controls -->
+        <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
+            <div class="flex items-center space-x-4">
+                <button id="prevWeekBtn" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+                <h2 id="currentWeekLabel" class="text-lg font-semibold"></h2>
+                <button id="nextWeekBtn" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <button id="addEventBtn" class="flex items-center space-x-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-md">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                <span>Add Event</span>
+            </button>
+        </div>
+
+        <!-- Weekly Calendar Grid -->
+        <div id="calendarGrid" class="bg-white dark:bg-dark-card rounded-xl shadow-lg overflow-hidden">
+            <!-- Calendar header and grid will be rendered by JavaScript -->
+        </div>
+    </main>
+
+    <!-- Event Modal -->
+    <div id="eventModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white dark:bg-dark-card rounded-xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="modalTitle" class="text-xl font-bold">Add Event</h3>
+                    <button id="closeModalBtn" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <form id="eventForm" class="space-y-4">
+                    <input type="hidden" id="eventId">
+                    
+                    <div>
+                        <label for="eventTitle" class="block text-sm font-medium mb-1">Title *</label>
+                        <input type="text" id="eventTitle" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-700">
+                    </div>
+                    
+                    <div>
+                        <label for="eventDescription" class="block text-sm font-medium mb-1">Description</label>
+                        <textarea id="eventDescription" rows="3" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-700"></textarea>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="eventDay" class="block text-sm font-medium mb-1">Day *</label>
+                            <select id="eventDay" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-700">
+                                <option value="1">Monday</option>
+                                <option value="2">Tuesday</option>
+                                <option value="3">Wednesday</option>
+                                <option value="4">Thursday</option>
+                                <option value="5">Friday</option>
+                                <option value="6">Saturday</option>
+                                <option value="0">Sunday</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="eventTime" class="block text-sm font-medium mb-1">Time *</label>
+                            <input type="time" id="eventTime" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-700">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="eventColor" class="block text-sm font-medium mb-1">Color</label>
+                        <div class="flex space-x-2">
+                            <button type="button" class="color-option w-8 h-8 rounded-full bg-indigo-500 ring-2 ring-offset-2 ring-indigo-500" data-color="#6366f1"></button>
+                            <button type="button" class="color-option w-8 h-8 rounded-full bg-pink-500" data-color="#ec4899"></button>
+                            <button type="button" class="color-option w-8 h-8 rounded-full bg-green-500" data-color="#10b981"></button>
+                            <button type="button" class="color-option w-8 h-8 rounded-full bg-yellow-500" data-color="#f59e0b"></button>
+                            <button type="button" class="color-option w-8 h-8 rounded-full bg-red-500" data-color="#ef4444"></button>
+                            <button type="button" class="color-option w-8 h-8 rounded-full bg-blue-500" data-color="#3b82f6"></button>
+                        </div>
+                        <input type="hidden" id="eventColor" value="#6366f1">
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input type="checkbox" id="eventAlarm" checked class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary">
+                        <label for="eventAlarm" class="ml-2 text-sm font-medium">Enable Alarm</label>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input type="checkbox" id="eventRepeat" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary">
+                        <label for="eventRepeat" class="ml-2 text-sm font-medium">Repeat Weekly</label>
+                    </div>
+                    
+                    <div class="flex space-x-3 pt-4">
+                        <button type="button" id="deleteEventBtn" class="hidden flex-1 px-4 py-2 bg-danger text-white rounded-lg hover:bg-red-700 transition-colors">
+                            Delete
+                        </button>
+                        <button type="submit" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio for Alarm -->
+    <audio id="alarmSound" preload="auto">
+        <source src="./assets/audio/alarm.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Scripts -->
+    <!-- Day.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/weekOfYear.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/isSameOrAfter.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/isSameOrBefore.js"></script>
+    
+    <!-- Toastify JS CDN -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    
+    <!-- IDB (IndexedDB Wrapper) CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/idb@7/build/umd.js"></script>
+    
+    <!-- Application Modules -->
+    <script type="module" src="./src/utils/constants.js"></script>
+    <script type="module" src="./src/models/Event.js"></script>
+    <script type="module" src="./src/services/DatabaseService.js"></script>
+    <script type="module" src="./src/services/AlarmService.js"></script>
+    <script type="module" src="./src/ui/CalendarUI.js"></script>
+    <script type="module" src="./src/ui/ModalUI.js"></script>
+    <script type="module" src="./src/app.js"></script>
+</body>
+</html>

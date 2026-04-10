@@ -1,0 +1,156 @@
+/* Custom Styles for Schedule Manager */
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Calendar Grid Styles */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: 80px repeat(7, 1fr);
+    gap: 1px;
+    background-color: #e5e7eb;
+}
+
+.dark .calendar-grid {
+    background-color: #374151;
+}
+
+.calendar-header {
+    background-color: #f9fafb;
+    padding: 12px 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.dark .calendar-header {
+    background-color: #1e293b;
+    color: #f1f5f9;
+}
+
+.time-slot {
+    background-color: #ffffff;
+    padding: 8px 4px;
+    font-size: 0.75rem;
+    color: #6b7280;
+    text-align: center;
+}
+
+.dark .time-slot {
+    background-color: #1e293b;
+    color: #9ca3af;
+}
+
+.calendar-cell {
+    background-color: #ffffff;
+    min-height: 80px;
+    padding: 4px;
+    position: relative;
+    transition: background-color 0.2s;
+}
+
+.dark .calendar-cell {
+    background-color: #0f172a;
+}
+
+.calendar-cell:hover {
+    background-color: #f3f4f6;
+    cursor: pointer;
+}
+
+.dark .calendar-cell:hover {
+    background-color: #1e293b;
+}
+
+.event-card {
+    padding: 6px 8px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.event-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.event-title {
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.event-time {
+    font-size: 0.625rem;
+    opacity: 0.9;
+}
+
+/* Modal Styles */
+.modal-backdrop {
+    backdrop-filter: blur(4px);
+}
+
+/* Color Picker */
+.color-option {
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.color-option:hover {
+    transform: scale(1.1);
+}
+
+.color-option.active {
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .calendar-grid {
+        grid-template-columns: 60px repeat(7, minmax(100px, 1fr));
+    }
+    
+    .calendar-cell {
+        min-height: 60px;
+    }
+    
+    .event-card {
+        font-size: 0.625rem;
+        padding: 4px 6px;
+    }
+}
+
+/* Animation for new events */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.event-card-new {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Alarm notification pulse */
+@keyframes pulse-alarm {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.alarm-active {
+    animation: pulse-alarm 1s infinite;
+}
