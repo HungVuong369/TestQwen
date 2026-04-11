@@ -111,14 +111,15 @@
                 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-i18n="modal.tagColor">Tag Color</label>
-                    <select id="scheduleTag" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-                        <option value="blue" data-i18n="tags.blue">Blue - General</option>
-                        <option value="green" data-i18n="tags.green">Green - Study</option>
-                        <option value="red" data-i18n="tags.red">Red - Deadline</option>
-                        <option value="yellow" data-i18n="tags.yellow">Yellow - Meeting</option>
-                        <option value="purple" data-i18n="tags.purple">Purple - Personal</option>
-                        <option value="orange" data-i18n="tags.orange">Orange - Work</option>
-                    </select>
+                    <div class="flex flex-wrap gap-2" id="tagColorPicker">
+                        <button type="button" data-color="blue" class="tag-color-btn w-8 h-8 rounded-full bg-blue-500 border-2 border-transparent hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" title="Blue"></button>
+                        <button type="button" data-color="green" class="tag-color-btn w-8 h-8 rounded-full bg-green-500 border-2 border-transparent hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500" title="Green"></button>
+                        <button type="button" data-color="red" class="tag-color-btn w-8 h-8 rounded-full bg-red-500 border-2 border-transparent hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500" title="Red"></button>
+                        <button type="button" data-color="yellow" class="tag-color-btn w-8 h-8 rounded-full bg-yellow-500 border-2 border-transparent hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500" title="Yellow"></button>
+                        <button type="button" data-color="purple" class="tag-color-btn w-8 h-8 rounded-full bg-purple-500 border-2 border-transparent hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500" title="Purple"></button>
+                        <button type="button" data-color="orange" class="tag-color-btn w-8 h-8 rounded-full bg-orange-500 border-2 border-transparent hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500" title="Orange"></button>
+                    </div>
+                    <input type="hidden" id="scheduleTag" value="blue">
                 </div>
                 
                 <div>
@@ -129,11 +130,11 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-i18n="modal.startTime">Start Time</label>
-                        <input type="time" id="startTimeDisplay" disabled class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-100 dark:bg-gray-600 text-gray-900 dark:text-white">
+                        <input type="time" id="startTimeDisplay" step="60" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-i18n="modal.endTime">End Time</label>
-                        <input type="time" id="endTimeDisplay" disabled class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-100 dark:bg-gray-600 text-gray-900 dark:text-white">
+                        <input type="time" id="endTimeDisplay" step="60" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500">
                     </div>
                 </div>
             </form>

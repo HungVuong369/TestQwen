@@ -157,6 +157,12 @@ class App {
         document.getElementById('importBtn').addEventListener('click', () => {
             this.importData();
         });
+
+        // Setup tag color picker
+        this.setupTagColorPicker();
+
+        // Setup time input sync
+        this.setupTimeInputSync();
     }
 
     /**
@@ -172,26 +178,88 @@ class App {
         // Reset form
         document.getElementById('scheduleForm').reset();
         document.getElementById('scheduleId').value = '';
+        document.getElementById('scheduleTag').value = 'blue';
+        this.updateTagColorSelection('blue');
 
         if (isEdit && schedule) {
             title.textContent = translations.modal.editTitle;
             document.getElementById('scheduleId').value = schedule.id;
             document.getElementById('scheduleName').value = schedule.name;
-            document.getElementById('scheduleTag').value = schedule.tagColor;
+            document.getElementById('scheduleTag').value = schedule.tagColor || 'blue';
+            this.updateTagColorSelection(schedule.tagColor || 'blue');
             document.getElementById('scheduleNotes').value = schedule.notes || '';
             document.getElementById('scheduleDay').value = schedule.dayOfWeek;
-            document.getElementById('scheduleStartTime').value = schedule.startTime;
             document.getElementById('startTimeDisplay').value = schedule.startTime;
             document.getElementById('endTimeDisplay').value = schedule.endTime;
         } else {
             title.textContent = translations.modal.addTitle;
             document.getElementById('scheduleDay').value = schedule?.dayOfWeek || 'mon';
-            document.getElementById('scheduleStartTime').value = schedule?.startTime || '09:00';
             document.getElementById('startTimeDisplay').value = schedule?.startTime || '09:00';
             document.getElementById('endTimeDisplay').value = schedule?.endTime || '10:00';
         }
 
         modal.classList.remove('hidden');
+    }
+
+    /**
+     * Update tag color button selection UI
+     * @param {string} selectedColor - The color to mark as selected
+     */
+    updateTagColorSelection(selectedColor) {
+        document.querySelectorAll('.tag-color-btn').forEach(btn => {
+            const color = btn.dataset.color;
+            if (color === selectedColor) {
+                btn.classList.add('border-gray-800', 'dark:border-white');
+                btn.classList.remove('border-transparent');
+            } else {
+                btn.classList.remove('border-gray-800', 'dark:border-white');
+                btn.classList.add('border-transparent');
+            }
+        });
+    }
+
+    /**
+     * Setup tag color picker event listeners
+     */
+    setupTagColorPicker() {
+        document.querySelectorAll('.tag-color-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const color = btn.dataset.color;
+                document.getElementById('scheduleTag').value = color;
+                this.updateTagColorSelection(color);
+            });
+        });
+    }
+
+    /**
+     * Setup time input sync
+     */
+    setupTimeInputSync() {
+        const startTimeInput = document.getElementById('startTimeDisplay');
+        const endTimeInput = document.getElementById('endTimeDisplay');
+        const hiddenStartInput = document.getElementById('scheduleStartTime');
+
+        // Sync start time to hidden input and auto-adjust end time
+        startTimeInput.addEventListener('change', (e) => {
+            hiddenStartInput.value = e.target.value;
+            // Auto-set end time to 1 hour later if not set or before start
+            const [hours, minutes] = e.target.value.split(':').map(Number);
+            const endHours = hours + 1;
+            const newEndTime = `${endHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+            if (!endTimeInput.value || endTimeInput.value <= e.target.value) {
+                endTimeInput.value = newEndTime;
+            }
+        });
+
+        // Sync end time changes
+        endTimeInput.addEventListener('change', (e) => {
+            // Ensure end time is after start time
+            if (e.target.value <= startTimeInput.value) {
+                const [hours, minutes] = startTimeInput.value.split(':').map(Number);
+                const endHours = hours + 1;
+                e.target.value = `${endHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+            }
+        });
     }
 
     /**
