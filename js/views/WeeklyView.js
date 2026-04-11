@@ -64,7 +64,10 @@ class WeeklyView {
                 });
 
                 startingSchedules.forEach(schedule => {
-                    const duration = schedule.getDuration();
+                    // Calculate duration from time strings (plain object compatible)
+                    const startMinutes = DateTimeHelper.timeToMinutes(schedule.startTime);
+                    const endMinutes = DateTimeHelper.timeToMinutes(schedule.endTime);
+                    const duration = endMinutes - startMinutes;
                     const rowspan = Math.max(1, Math.ceil(duration / 60));
 
                     const scheduleEl = document.createElement('div');
