@@ -125,7 +125,8 @@ class WeeklyView {
     async handleScheduleClick(scheduleId) {
         const schedule = await this.scheduleService.repository.getById(scheduleId);
         if (schedule) {
-            window.app.openScheduleModal(schedule, true);
+            // Open detail panel instead of modal
+            window.app.detailPanel.show(schedule);
         }
     }
 
