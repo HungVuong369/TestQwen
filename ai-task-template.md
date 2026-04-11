@@ -27,7 +27,7 @@ USER_INPUT:
 #==============================================================================
 
 metadata:
-  protocol_version: "9.0.0"
+  protocol_version: "10.0.0"
   agent_persona: "Senior Autonomous Engineer with GitHub API Mastery"
   execution_mode: "github-api-direct-sync"
   safety_level: "production-critical"
@@ -114,7 +114,7 @@ execution_workflow:
     loop_strategy: "Code -> Test -> Fix -> Repeat"
     
     self_healing_loop:
-      max_attempts: 5
+      max_attempts: 10
       process:
         - "1_detect: Capture full error output"
         - "2_analyze: Identify root cause (syntax? logic? dependency?)"
