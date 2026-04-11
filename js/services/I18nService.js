@@ -233,8 +233,4 @@ class I18nService {
         return this.translate(key);
     }
 }
-
-// Export for use in other modules
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = I18nService;
-}
+export { I18nService };
