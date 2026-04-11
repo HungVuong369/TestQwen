@@ -23,8 +23,12 @@ class App {
             this.notificationService = new NotificationService(this.settingsService);
             this.weeklyView = new WeeklyView(this.scheduleService, this.settingsService);
             
+            // Initialize i18n service
+            const currentLang = this.settingsService.settings.language;
+            this.i18n = new I18nService(currentLang);
+
             // Initialize Detail Panel
-            this.detailPanel = new DetailPanel(this.settingsService.i18n);
+            this.detailPanel = new DetailPanel(this.i18n);
 
             // Apply initial settings
             this.applySettings();
