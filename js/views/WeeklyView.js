@@ -43,7 +43,7 @@ class WeeklyView {
         for (let hour = startHour; hour <= endHour; hour++) {
             // Time label column
             const timeCell = document.createElement('div');
-            timeCell.className = 'bg-white dark:bg-gray-800 p-1 text-center border-r border-gray-200 dark:border-gray-700';
+            timeCell.className = 'bg-white dark:bg-gray-800 p-1 text-center border-r border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100';
             timeCell.style.fontSize = `${CONSTANTS.COMPACT_GRID.FONT_SIZE}px`;
             timeCell.textContent = DateTimeHelper.formatTime(hour);
             this.gridElement.appendChild(timeCell);
