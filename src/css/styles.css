@@ -1,0 +1,121 @@
+/* Custom styles for Weekly Schedule Manager */
+
+/* Compact grid styling */
+#weeklyGrid {
+    font-size: 10px;
+    line-height: 1.2;
+}
+
+/* Ensure grid fits in viewport without scroll */
+#weeklyGrid > div {
+    box-sizing: border-box;
+}
+
+/* Dark mode adjustments */
+.dark .bg-white {
+    background-color: rgb(31, 41, 55);
+}
+
+.dark .bg-gray-50 {
+    background-color: rgb(17, 24, 39);
+}
+
+.dark .border-gray-200 {
+    border-color: rgb(55, 65, 81);
+}
+
+/* Hover effects for grid cells */
+#weeklyGrid .hover\:bg-gray-50:hover {
+    background-color: rgb(249, 250, 251);
+}
+
+.dark #weeklyGrid .dark\:hover\:bg-gray-750:hover {
+    background-color: rgb(55, 65, 81);
+}
+
+/* Schedule block styling */
+[data-schedule-id] {
+    transition: transform 0.1s ease;
+}
+
+[data-schedule-id]:hover {
+    transform: scale(1.02);
+    z-index: 10;
+}
+
+/* Modal transitions */
+#scheduleModal {
+    transition: opacity 0.2s ease;
+}
+
+#scheduleModal > div {
+    transition: transform 0.2s ease;
+}
+
+/* Detail panel transitions */
+#detailPanel {
+    transition: transform 0.3s ease;
+}
+
+#detailPanel.translate-x-full {
+    transform: translateX(100%);
+}
+
+/* FAB button animation */
+#addScheduleFab {
+    transition: all 0.2s ease;
+}
+
+#addScheduleFab:hover {
+    transform: scale(1.1);
+}
+
+#addScheduleFab:active {
+    transform: scale(0.95);
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 1024px) {
+    #weeklyGrid {
+        font-size: 9px;
+    }
+    
+    .max-w-\[1800px\] {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    #weeklyGrid {
+        font-size: 8px;
+    }
+    
+    /* Hide weekend on very small screens if needed */
+    /* Can be enabled for mobile view */
+    /*
+    #weeklyGrid > div:nth-child(8n+7),
+    #weeklyGrid > div:nth-child(8n+8) {
+        display: none;
+    }
+    */
+}
+
+/* Print styles */
+@media print {
+    #addScheduleFab,
+    #settingsBtn,
+    #exportBtn,
+    #importBtn,
+    #darkModeToggle {
+        display: none !important;
+    }
+    
+    body {
+        background: white !important;
+    }
+    
+    #weeklyGrid {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+    }
+}
