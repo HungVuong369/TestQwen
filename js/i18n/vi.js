@@ -69,5 +69,31 @@ const i18n_vi = {
     },
     week: {
         currentWeek: 'Tuần {week} năm {year}'
+    },
+    detailPanel: {
+        startTime: 'Giờ bắt đầu',
+        endTime: 'Giờ kết thúc',
+        day: 'Ngày',
+        notes: 'Ghi chú',
+        noNotes: 'Không có ghi chú',
+        duration: 'Thời lượng',
+        category: 'Danh mục',
+        edit: 'Chỉnh sửa',
+        delete: 'Xóa',
+        work: 'Công việc',
+        study: 'Học tập',
+        urgent: 'Khẩn cấp',
+        meeting: 'Họp',
+        personal: 'Cá nhân',
+        other: 'Khác'
+    },
+    days: {
+        monday: 'Thứ Hai',
+        tuesday: 'Thứ Ba',
+        wednesday: 'Thứ Tư',
+        thursday: 'Thứ Năm',
+        friday: 'Thứ Sáu',
+        saturday: 'Thứ Bảy',
+        sunday: 'Chủ Nhật'
     }
 };

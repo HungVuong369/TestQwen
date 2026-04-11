@@ -22,6 +22,9 @@ class App {
 
             this.notificationService = new NotificationService(this.settingsService);
             this.weeklyView = new WeeklyView(this.scheduleService, this.settingsService);
+            
+            // Initialize Detail Panel
+            this.detailPanel = new DetailPanel(this.settingsService.i18n);
 
             // Apply initial settings
             this.applySettings();
@@ -163,6 +166,18 @@ class App {
 
         // Setup time input sync
         this.setupTimeInputSync();
+        
+        // Setup Detail Panel callbacks
+        this.detailPanel.setCallbacks(
+            (schedule) => this.openScheduleModal(schedule, true),
+            async (schedule) => {
+                const confirmed = confirm(this.settingsService.i18n.translate('alerts.confirmDelete'));
+                if (confirmed) {
+                    await this.deleteScheduleById(schedule.id);
+                    this.detailPanel.close();
+                }
+            }
+        );
     }
 
     /**
@@ -359,6 +374,23 @@ class App {
         };
 
         input.click();
+    }
+
+    /**
+     * Delete schedule by ID (used by DetailPanel)
+     * @param {number} id - Schedule ID to delete
+     */
+    async deleteScheduleById(id) {
+        try {
+            await this.scheduleService.deleteSchedule(id);
+            await this.weeklyView.refresh();
+            
+            const translations = this.settingsService.getTranslations();
+            alert(translations.alerts.scheduleDeleted);
+        } catch (error) {
+            console.error('Failed to delete schedule:', error);
+            alert('Delete failed: ' + error.message);
+        }
     }
 }
 

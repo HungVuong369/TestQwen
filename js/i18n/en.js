@@ -69,5 +69,31 @@ const i18n_en = {
     },
     week: {
         currentWeek: 'Week {week} of {year}'
+    },
+    detailPanel: {
+        startTime: 'Start Time',
+        endTime: 'End Time',
+        day: 'Day',
+        notes: 'Notes',
+        noNotes: 'No notes',
+        duration: 'Duration',
+        category: 'Category',
+        edit: 'Edit',
+        delete: 'Delete',
+        work: 'Work',
+        study: 'Study',
+        urgent: 'Urgent',
+        meeting: 'Meeting',
+        personal: 'Personal',
+        other: 'Other'
+    },
+    days: {
+        monday: 'Monday',
+        tuesday: 'Tuesday',
+        wednesday: 'Wednesday',
+        thursday: 'Thursday',
+        friday: 'Friday',
+        saturday: 'Saturday',
+        sunday: 'Sunday'
     }
 };
