@@ -280,7 +280,7 @@ class App {
                 tagColor: document.getElementById('scheduleTag').value,
                 notes: document.getElementById('scheduleNotes').value,
                 dayOfWeek: document.getElementById('scheduleDay').value,
-                startTime: document.getElementById('scheduleStartTime').value,
+                startTime: document.getElementById('startTimeDisplay').value,
                 endTime: document.getElementById('endTimeDisplay').value
             };
 
